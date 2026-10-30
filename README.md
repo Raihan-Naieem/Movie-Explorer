@@ -1,3 +1,4 @@
+
 # 🎬 Assignment: Movie Explorer
 
 > **Objective:** Build a responsive **Movie Explorer Application** using React. Users should be able to browse movies, search for specific titles, and view detailed information in an interactive modal.
@@ -186,3 +187,4 @@ Students must submit the following via the designated submission portal:
 * **No Copying:** Do not copy code from peers or online sources.
 * **No AI Code:** Do not use AI generators. We actively run AI code detection tools.
 * **Original Work:** All code must be 100% your own.
+
