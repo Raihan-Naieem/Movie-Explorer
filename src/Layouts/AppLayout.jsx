@@ -5,10 +5,12 @@ import { Footer } from "../Components/Footer";
 export function AppLayout() {
   return (
     <>
-      <div className="min-h-screen flex flex-col justify-between">
+      <div className="h-screen flex flex-col justify-between">
         <Navbar />
 
-        <Outlet />
+        <div className="bg-blue-700">
+          <Outlet />
+        </div>
 
         <Footer />
       </div>

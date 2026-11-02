@@ -5,6 +5,7 @@ import { RouterProvider } from "react-router/dom";
 import { Home } from "./Components/Home";
 import { About } from "./Components/About";
 import { AppLayout } from "./Layouts/AppLayout";
+import { Shows } from "./Components/Shows";
 
 const router = createBrowserRouter([
   {
@@ -14,6 +15,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, Component: Home },
       { path: "about", Component: About },
+      { path: "shows", Component: Shows },
     ],
   },
 ]);
