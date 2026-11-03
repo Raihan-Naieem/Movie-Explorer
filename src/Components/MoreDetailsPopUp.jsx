@@ -5,10 +5,10 @@ export function MoreDetailsPopUp({ title, summary, imgURL, onClose }) {
     <>
       <div className="backdrop-blur-xl bg-black/50 fixed inset-0 flex justify-center items-center">
         <div
-          className="h-100 w-200 bg-amber-600 rounded-4xl bg-cover bg-center overflow-hidden border-2 back relative"
+          className="h-100 w-200 bg-amber-600 rounded-4xl bg-cover bg-center overflow-hidden border-2 back relative mx-6"
           style={{ backgroundImage: `url("${imgURL}")` }}
         >
-          <div className="flex flex-col gap-16  p-6 items-center text-gray-100 backdrop-blur-[1px] bg-black/30 absolute inset-0">
+          <div className="flex flex-col gap-16  p-6 items-center text-gray-300 backdrop-blur-[1px] bg-black/50 absolute inset-0">
             <button
               className="self-end hover:bg-white/20 rounded-xl p-2"
               type="button"
@@ -16,9 +16,13 @@ export function MoreDetailsPopUp({ title, summary, imgURL, onClose }) {
             >
               <X />
             </button>
-            <div className="flex flex-col justify-center items-center gap-4">
-              <h1 className="font-extrabold text-4xl underline">{title}</h1>
-              <p className="text-2xl">{summary}</p>
+            <div className="flex flex-col justify-center items-center gap-4  ">
+              <h1 className="font-extrabold sm:text-4xl text-2xl underline">
+                {title}
+              </h1>
+              <p className="sm:text-2xl text-md overflow-y-auto max-h-50 pb-8">
+                {summary}
+              </p>
             </div>
           </div>
         </div>

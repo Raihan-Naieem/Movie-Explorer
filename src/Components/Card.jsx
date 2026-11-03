@@ -25,7 +25,7 @@ export function Card({
   const [isOpen, setIsOpen] = useState(false);
   return (
     <>
-      <div className="flex flex-col justify-center items-center gap-4 border-2 rounded-2xl px-6 py-8 bg-yellow-800/50">
+      <div className="flex flex-col justify-center items-center gap-4 border-2 rounded-2xl px-6 py-4 bg-yellow-800/50">
         <img
           className={`h-full aspect-2/3 rounded-4xl border-2`}
           src={encodeURI(imgURL)}
