@@ -13,11 +13,13 @@
 // 	/movie/{id}/videos
 // 	/movie/{id}/recommendations
 
-const formatURL = (endPoint) => {
+const formatURL = (endPoint, query = "") => {
   const TMDB_APIKEY = "4d8d05aa62f97ac6cbf460e45e042229";
   const baseURL = "https://api.themoviedb.org/3";
 
-  return `${baseURL}${endPoint}?api_key=${TMDB_APIKEY}`;
+  return query
+    ? `${baseURL}${endPoint}?query=${query}&api_key=${TMDB_APIKEY}`
+    : `${baseURL}${endPoint}?api_key=${TMDB_APIKEY}`;
 };
 
 // format results
@@ -43,9 +45,10 @@ const formatResults = (results) => {
   return newResults;
 };
 
-const fetchPageData = async (endPoint, pageTitle) => {
+const fetchPageData = async (endPoint, query = "", pageTitle) => {
   try {
-    const res = await fetch(formatURL(endPoint));
+    console.log(formatURL(endPoint, query));
+    const res = await fetch(formatURL(endPoint, query));
     if (!res.ok) throw new Error(`TMDB API ERROR: ${res.statusText}`);
 
     const json = await res.json();
@@ -71,7 +74,20 @@ export const getTrendingMovies = () =>
   fetchPageData("/trending/movie/week", "Trending movies this week");
 
 // TODO: doesnt work, check later
-export const getBYKeyWords = (keyword) =>
-  fetchPageData(`/search/${keyword}`, "bla bla bla");
+export const getShowsBYKeyWords = (keyword) =>
+  fetchPageData(
+    `/search/tv`,
+    encodeURIComponent(keyword),
+    `searched movies with ${keyword} name`,
+  );
 
-console.log(await getPopularMovies());
+export const getMoviesBYKeyWords = (keyword) =>
+  fetchPageData(
+    `/search/movie`,
+    encodeURIComponent(keyword),
+    `searched movies with "${keyword}" name`,
+  );
+
+// console.log(formatURL("/search/tv", "house"));
+// console.log(formatURL("/search/movie", "batman"));
+// console.log(await getMoviesBYKeyWords("batman"));

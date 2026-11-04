@@ -33,16 +33,16 @@ export function Card({
         />
         <div className="h-full flex flex-col justify-center items-center text-gray-100">
           <div>
-            <p>
+            <div>
               <span className="font-bold">Title: </span> {title}
-            </p>
-            <p>
+            </div>
+            <div className="flex justify-center items-center gap-2">
               <span className="font-bold">Release Date: </span>
-              {releaseDate}
-            </p>
-            <p>
+              <p className="text-sm">{releaseDate}</p>
+            </div>
+            <div>
               <span className="font-bold">Rating: </span> {rating} ({voteCount})
-            </p>
+            </div>
           </div>
         </div>
         <div className="">

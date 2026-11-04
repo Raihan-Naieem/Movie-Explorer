@@ -8,20 +8,20 @@ export function Shows() {
 
   if (error)
     return (
-      <p className="min-h-dvh flex justify-center items-center border rounded-2xl bg-pink-400 text-4xl">
+      <p className="min-h-dvh flex justify-center items-center rounded-2xl bg-blue-700 text-8xl text-red-600">
         ${error}
       </p>
     );
   if (isLoading)
     return (
-      <p className="min-h-dvh flex justify-center items-center border rounded-2xl bg-pink-400 text-4xl">
+      <p className="min-h-dvh flex justify-center items-center rounded-2xl bg-blue-700 text-8xl text-white">
         Loading...
       </p>
     );
   return (
     <>
       <h1 className="text-3xl font-extrabold text-center text-gray-100 pt-4">
-        {pageTitle}
+        {!pageTitle && <p>0 search results</p>}
       </h1>
       <div className="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] auto-rows-min gap-8 min-h-dvh m-8">
         {shows.map((show) => {
