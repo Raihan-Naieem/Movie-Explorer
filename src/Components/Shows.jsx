@@ -18,8 +18,8 @@ export function Shows() {
     );
   return (
     <>
-      <h1 className="text-3xl font-extrabold text-center text-gray-100 pt-4">
-        {!pageTitle && <p>0 search results</p>}
+      <h1 className="text-xl sm:text-3xl font-extrabold text-center text-gray-100 pt-4">
+        {pageTitle ? <p>{pageTitle}</p> : <p>0 search results</p>}
       </h1>
       <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] auto-rows-min gap-8 min-h-dvh m-8">
         {shows.map((show) => {
@@ -27,6 +27,7 @@ export function Shows() {
             <Card
               key={show.id}
               title={show.title}
+              mediaType={show.mediaType}
               genres={show.genres}
               releaseDate={show.releaseDate}
               rating={show.rating}

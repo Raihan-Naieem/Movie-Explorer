@@ -15,6 +15,7 @@ import { MoreDetailsPopUp } from "./MoreDetailsPopUp";
 
 export function Card({
   title,
+  mediaType,
   genres,
   releaseDate,
   rating,
@@ -36,6 +37,9 @@ export function Card({
           <div>
             <div>
               <span className="font-bold">Title: </span> {title}
+            </div>
+            <div>
+              <span className="font-bold">Media: </span> {mediaType}
             </div>
             <div>
               <span className="font-bold">Release: </span> {releaseDate}
@@ -60,6 +64,7 @@ export function Card({
       {isOpen && (
         <MoreDetailsPopUp
           title={title}
+          mediaType={mediaType}
           genres={genres}
           releaseDate={releaseDate}
           rating={rating}

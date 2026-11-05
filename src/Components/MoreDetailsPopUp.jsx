@@ -3,6 +3,7 @@ import { useEffect } from "react";
 
 export function MoreDetailsPopUp({
   title,
+  mediaType,
   genres,
   releaseDate,
   rating,
@@ -31,7 +32,7 @@ export function MoreDetailsPopUp({
         onClick={onClose}
       >
         <div
-          className="h-100 w-200 rounded-4xl bg-cover bg-center overflow-hidden border-2 back relative mx-6"
+          className="h-120 w-200 rounded-4xl bg-cover bg-center overflow-hidden border-2 back relative mx-6"
           style={{ backgroundImage: `url("${imgURL}")` }}
           onClick={stopEventPropagation}
         >
@@ -52,6 +53,7 @@ export function MoreDetailsPopUp({
                 <div className="flex gap-x-2">
                   <div className="font-medium">
                     <p>Rating: </p>
+                    <p>Media: </p>
                     <p>Release: </p>
                     <p>NSFW: </p>
                     <p>Genres: </p>
@@ -60,12 +62,14 @@ export function MoreDetailsPopUp({
                     <p>
                       {rating} ({voteCount})
                     </p>
+
+                    <p> {mediaType} </p>
                     <p> {releaseDate}</p>
                     <p> {isSafeForWork ? "no" : "yes"}</p>
                     <p> {genres.join(" , ")} </p>
                   </div>
                 </div>
-                <p className="font-medium">Overview:</p>
+                <p className="font-medium text-3xl mt-4">Overview:</p>
                 <p>{summary}</p>
               </div>
             </div>

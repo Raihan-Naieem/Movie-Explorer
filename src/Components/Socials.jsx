@@ -1,8 +1,9 @@
 export function Socials() {
-  const sizeIcon = "size-6 shrink-0";
+  const sizeIcon =
+    "size-6 sm:size-8 hover:scale-120 transition-all duration-200 shrink-0";
   return (
     <>
-      <div className="flex items-center justify-center gap-12">
+      <div className="flex items-center justify-center gap-8">
         <a href="#" className="flex flex-col items-center gap-1">
           <svg
             xmlns="http://www.w3.org/2000/svg"

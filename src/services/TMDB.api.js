@@ -1,8 +1,6 @@
 // GET search/shows?q=girls
 // GET /shows
 
-import { Genres } from "../utils/Genre.enum";
-
 // TMDB api doc
 // 	/trending/movie/week
 // 	/trending/tv/week
@@ -15,8 +13,10 @@ import { Genres } from "../utils/Genre.enum";
 // 	/movie/{id}/videos
 // 	/movie/{id}/recommendations
 
+import { Genres } from "../utils/Genre.enum";
+
 const formatURL = (endPoint, query = "") => {
-  const TMDB_APIKEY = "4d8d05aa62f97ac6cbf460e45e042229";
+  const TMDB_APIKEY = import.meta.env.VITE_TMDB_APIKEY;
   const baseURL = "https://api.themoviedb.org/3";
 
   return query
@@ -40,6 +40,7 @@ const formatResults = (results) => {
     return {
       id: result.id,
       title: result.title ?? result.name,
+      mediaType: result.media_type || (result.title ? "tv" : "movie"), // sometime responce have undefine media_type
       genres: findGenres(result.genre_ids),
       releaseDate: result.release_date ?? result.first_air_date,
       rating: result.vote_average,
@@ -53,7 +54,7 @@ const formatResults = (results) => {
   return newResults;
 };
 
-const fetchPageData = async (endPoint, query = "", pageTitle) => {
+const fetchPageData = async (endPoint, pageTitle, query = "") => {
   try {
     console.log(`formaturl: ${formatURL(endPoint, query)}`);
     const responce = await fetch(formatURL(endPoint, query));
@@ -62,14 +63,15 @@ const fetchPageData = async (endPoint, query = "", pageTitle) => {
     const json = await responce.json();
     console.log(json);
     const results = formatResults(json.results);
-    const { totalPages, totalResults } = json;
+    const { total_pages, total_results } = json;
     const newData = {
-      pageTitle: `${pageTitle}`,
+      pageTitle: `${pageTitle} \n total results (${total_results})`,
       results: results,
-      totalPages: Number(totalPages),
-      totalResults: Number(totalResults),
+      totalPages: Number(total_pages),
+      totalResults: Number(total_results),
     };
 
+    console.log(newData);
     return newData;
   } catch (err) {
     console.log(err);
@@ -91,24 +93,24 @@ export const getTrendingMovies = () =>
 export const getShowsBYKeyWord = (keyword) => {
   return fetchPageData(
     `/search/tv`,
+    `found shows with ${keyword} name`,
     encodeURIComponent(keyword),
-    `searched shows with ${keyword} name`,
   );
 };
 
 export const getMoviesBYKeyWord = (keyword) => {
   return fetchPageData(
     `/search/movie`,
+    `found movies with ${keyword} name`,
     encodeURIComponent(keyword),
-    `searched movies with "${keyword}" name`,
   );
 };
 
 export const getMoviesAndShowsByKeyWord = (keyword) => {
   return fetchPageData(
     `/search/multi`,
+    `found movies or shows with ${keyword} name`,
     encodeURIComponent(keyword),
-    `searched "${keyword}"`,
   );
 };
 
