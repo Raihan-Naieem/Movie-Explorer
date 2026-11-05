@@ -26,12 +26,15 @@ const formatURL = (endPoint, query = "") => {
 
 const findGenres = (genreIds) => {
   // let genreNames = [] // list of {id: , name:}
+  try {
+    const genreNames = Genres.filter((genre) =>
+      genreIds.includes(genre.id),
+    ).map((genre) => genre.name);
 
-  const genreNames = Genres.filter((genre) => genreIds.includes(genre.id)).map(
-    (genre) => genre.name,
-  );
-
-  return [...new Set(genreNames.sort())]; // excludes duplicates
+    return [...new Set(genreNames.sort())]; // excludes duplicates
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 // results === list of object
@@ -93,7 +96,7 @@ export const getTrendingMovies = () =>
 export const getShowsBYKeyWord = (keyword) => {
   return fetchPageData(
     `/search/tv`,
-    `found shows with ${keyword} name`,
+    `${keyword} name`,
     encodeURIComponent(keyword),
   );
 };
@@ -101,7 +104,7 @@ export const getShowsBYKeyWord = (keyword) => {
 export const getMoviesBYKeyWord = (keyword) => {
   return fetchPageData(
     `/search/movie`,
-    `found movies with ${keyword} name`,
+    `${keyword} name`,
     encodeURIComponent(keyword),
   );
 };
@@ -109,7 +112,7 @@ export const getMoviesBYKeyWord = (keyword) => {
 export const getMoviesAndShowsByKeyWord = (keyword) => {
   return fetchPageData(
     `/search/multi`,
-    `found movies or shows with ${keyword} name`,
+    `${keyword} name`,
     encodeURIComponent(keyword),
   );
 };
