@@ -1,4 +1,5 @@
 import { X } from "lucide-react";
+import { useEffect } from "react";
 
 export function MoreDetailsPopUp({
   title,
@@ -11,6 +12,16 @@ export function MoreDetailsPopUp({
   imgURL,
   onClose,
 }) {
+  // to disable scrolling when moreDetailsPopup
+  useEffect(() => {
+    // on modal open
+    document.body.style.overflow = "hidden";
+
+    // on modal close
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, []);
   const stopEventPropagation = (event) => event.stopPropagation();
   return (
     <>

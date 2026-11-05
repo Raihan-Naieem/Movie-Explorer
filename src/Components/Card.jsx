@@ -15,10 +15,11 @@ import { MoreDetailsPopUp } from "./MoreDetailsPopUp";
 
 export function Card({
   title,
+  genres,
   releaseDate,
   rating,
   voteCount,
-  // isSafeForWork,
+  isSafeForWork,
   summary,
   imgURL,
 }) {
@@ -36,9 +37,8 @@ export function Card({
             <div>
               <span className="font-bold">Title: </span> {title}
             </div>
-            <div className="flex justify-center items-center gap-2">
-              <span className="font-bold">Release Date: </span>
-              <p className="text-sm">{releaseDate}</p>
+            <div>
+              <span className="font-bold">Release: </span> {releaseDate}
             </div>
             <div>
               <span className="font-bold">Rating: </span> {rating} ({voteCount})
@@ -60,6 +60,11 @@ export function Card({
       {isOpen && (
         <MoreDetailsPopUp
           title={title}
+          genres={genres}
+          releaseDate={releaseDate}
+          rating={rating}
+          voteCount={voteCount}
+          isSafeForWork={isSafeForWork}
           summary={summary}
           imgURL={imgURL}
           onClose={() => setIsOpen(false)}

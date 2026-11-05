@@ -21,7 +21,7 @@ export function Shows() {
       <h1 className="text-3xl font-extrabold text-center text-gray-100 pt-4">
         {!pageTitle && <p>0 search results</p>}
       </h1>
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] auto-rows-min gap-8 min-h-dvh m-8">
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] auto-rows-min gap-8 min-h-dvh m-8">
         {shows.map((show) => {
           return (
             <Card
