@@ -1,6 +1,8 @@
 // GET search/shows?q=girls
 // GET /shows
 
+import { Genres } from "../utils/Genre.enum";
+
 // TMDB api doc
 // 	/trending/movie/week
 // 	/trending/tv/week
@@ -22,10 +24,15 @@ const formatURL = (endPoint, query = "") => {
     : `${baseURL}${endPoint}?api_key=${TMDB_APIKEY}`;
 };
 
-// format results
-/// media_type: 'tv' or 'movie'
-// first_air_date -- release_date
-// name -- title
+const findGenres = (genreIds) => {
+  // let genreNames = [] // list of {id: , name:}
+
+  const genreNames = Genres.filter((genre) => genreIds.includes(genre.id)).map(
+    (genre) => genre.name,
+  );
+
+  return [...new Set(genreNames.sort())]; // excludes duplicates
+};
 
 // results === list of object
 const formatResults = (results) => {
@@ -33,6 +40,7 @@ const formatResults = (results) => {
     return {
       id: result.id,
       title: result.title ?? result.name,
+      genres: findGenres(result.genre_ids),
       releaseDate: result.release_date ?? result.first_air_date,
       rating: result.vote_average,
       voteCount: result.vote_count,
@@ -47,13 +55,20 @@ const formatResults = (results) => {
 
 const fetchPageData = async (endPoint, query = "", pageTitle) => {
   try {
-    console.log(formatURL(endPoint, query));
-    const res = await fetch(formatURL(endPoint, query));
-    if (!res.ok) throw new Error(`TMDB API ERROR: ${res.statusText}`);
+    console.log(`formaturl: ${formatURL(endPoint, query)}`);
+    const responce = await fetch(formatURL(endPoint, query));
+    if (!responce.ok) throw new Error(`TMDB API ERROR: ${responce.statusText}`);
 
-    const json = await res.json();
+    const json = await responce.json();
+    console.log(json);
     const results = formatResults(json.results);
-    const newData = { pageTitle: `${pageTitle}`, results: results };
+    const { totalPages, totalResults } = json;
+    const newData = {
+      pageTitle: `${pageTitle}`,
+      results: results,
+      totalPages: Number(totalPages),
+      totalResults: Number(totalResults),
+    };
 
     return newData;
   } catch (err) {
@@ -73,21 +88,32 @@ export const getPopularMovies = () =>
 export const getTrendingMovies = () =>
   fetchPageData("/trending/movie/week", "Trending movies this week");
 
-// TODO: doesnt work, check later
-export const getShowsBYKeyWords = (keyword) =>
-  fetchPageData(
+export const getShowsBYKeyWord = (keyword) => {
+  return fetchPageData(
     `/search/tv`,
     encodeURIComponent(keyword),
-    `searched movies with ${keyword} name`,
+    `searched shows with ${keyword} name`,
   );
+};
 
-export const getMoviesBYKeyWords = (keyword) =>
-  fetchPageData(
+export const getMoviesBYKeyWord = (keyword) => {
+  return fetchPageData(
     `/search/movie`,
     encodeURIComponent(keyword),
     `searched movies with "${keyword}" name`,
   );
+};
 
+export const getMoviesAndShowsByKeyWord = (keyword) => {
+  return fetchPageData(
+    `/search/multi`,
+    encodeURIComponent(keyword),
+    `searched "${keyword}"`,
+  );
+};
+
+// tests
 // console.log(formatURL("/search/tv", "house"));
 // console.log(formatURL("/search/movie", "batman"));
-// console.log(await getMoviesBYKeyWords("batman"));
+// console.log(await getMoviesBYKeyWord("batman"));
+// console.log(await getMoviesAndShowsByKeyWord("batman"));

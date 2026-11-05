@@ -4,8 +4,6 @@ import { useShows } from "../hooks/useShows.jsx";
 export function Shows() {
   const { pageTitle, shows, isLoading, error } = useShows();
 
-  // const [isOpen, setIsOpen] = useState(false);
-
   if (error)
     return (
       <p className="min-h-dvh flex justify-center items-center rounded-2xl bg-blue-700 text-8xl text-red-600">
@@ -29,6 +27,7 @@ export function Shows() {
             <Card
               key={show.id}
               title={show.title}
+              genres={show.genres}
               releaseDate={show.releaseDate}
               rating={show.rating}
               voteCount={show.voteCount}

@@ -1,6 +1,9 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import { getShowsBYKeyWords, getTrendingShows } from "../services/TMDB.api";
+import {
+  getMoviesAndShowsByKeyWord,
+  getTrendingShows,
+} from "../services/TMDB.api";
 import { useSearchParams } from "react-router";
 
 export function useShows() {
@@ -18,13 +21,15 @@ export function useShows() {
         setError("");
 
         if (searchTerm) {
-          const { pageTitle, results } = await getShowsBYKeyWords(searchTerm);
+          const { pageTitle, results } =
+            await getMoviesAndShowsByKeyWord(searchTerm);
           setPageTitle(pageTitle);
           setShows(results);
         } else {
           const { pageTitle, results } = await getTrendingShows();
           setPageTitle(pageTitle);
           setShows(results);
+          console.log(results);
         }
       } catch (err) {
         console.log(err);
