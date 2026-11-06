@@ -47,7 +47,7 @@ bun install      # or: npm install
 Copy `.env.example`
 
 ```bash
-cp .env.example .env
+cp .example.env .env
 ```
 and add your free API key
 
