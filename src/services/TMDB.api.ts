@@ -13,9 +13,10 @@
 // 	/movie/{id}/videos
 // 	/movie/{id}/recommendations
 
+import type { PageData, TmdbJson, TmdbMedia, TmdbRawApi } from "../types/tmdb";
 import { Genres } from "../utils/Genre.enum";
 
-const formatURL = (endPoint, query = "") => {
+const formatURL = (endPoint: string, query: string = ""): string => {
   const TMDB_APIKEY = import.meta.env.VITE_TMDB_APIKEY;
   const baseURL = "https://api.themoviedb.org/3";
 
@@ -24,76 +25,81 @@ const formatURL = (endPoint, query = "") => {
     : `${baseURL}${endPoint}?api_key=${TMDB_APIKEY}`;
 };
 
-const findGenres = (genreIds) => {
-  // let genreNames = [] // list of {id: , name:}
-  try {
-    const genreNames = Genres.filter((genre) =>
-      genreIds.includes(genre.id),
-    ).map((genre) => genre.name);
+const findGenres = (genreIds: number[] | undefined): string[] | undefined => {
+	if(!genreIds) return undefined;
+  const genreNames = Genres.filter((genre) => genreIds.includes(genre.id)).map(
+    (genre) => genre.name,
+  );
 
-    return [...new Set(genreNames.sort())]; // excludes duplicates
-  } catch (error) {
-    console.log(error);
-  }
+  return [...new Set(genreNames.sort())];
 };
 
 // results === list of object
-const formatResults = (results) => {
+const formatResults = (results: TmdbRawApi[]): TmdbMedia[] => {
   const newResults = results.map((result) => {
     return {
       id: result.id,
       title: result.title ?? result.name,
-      mediaType: result.media_type || (result.title ? "tv" : "movie"), // sometime responce have undefine media_type
+      mediaType: result.media_type || (result.title ? "movie" : "tv"), // sometime responce have undefine media_type
       genres: findGenres(result.genre_ids),
       releaseDate: result.release_date ?? result.first_air_date,
       rating: result.vote_average,
       voteCount: result.vote_count,
       summary: result.overview,
       isSafeForWork: result.adult,
-      imgURL: `https://image.tmdb.org/t/p/original/${result.poster_path}`,
+      imgURL: result.poster_path
+        ? `https://image.tmdb.org/t/p/original/${result.poster_path}`
+        : "",
     };
   });
-
   return newResults;
 };
 
-const fetchPageData = async (endPoint, pageTitle, query = "") => {
+const fetchPageData = async (
+  endPoint: string,
+  pageTitle: string,
+  query: string = "",
+): Promise<PageData> => {
   try {
     console.log(`formaturl: ${formatURL(endPoint, query)}`);
-    const responce = await fetch(formatURL(endPoint, query));
+    const responce: Response = await fetch(formatURL(endPoint, query));
     if (!responce.ok) throw new Error(`TMDB API ERROR: ${responce.statusText}`);
 
-    const json = await responce.json();
-    console.log(json);
+    const json = (await responce.json()) as TmdbJson;
     const results = formatResults(json.results);
-    const { total_pages, total_results } = json;
-    const newData = {
-      pageTitle: `${pageTitle} \n total results (${total_results})`,
+    const newData: PageData = {
+      pageTitle: `${pageTitle} \n total results (${json.total_results})`,
       results: results,
-      totalPages: Number(total_pages),
-      totalResults: Number(total_results),
+      totalPages: json.total_pages,
+      totalResults: json.total_results,
     };
 
     console.log(newData);
     return newData;
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    if (error instanceof Error) {
+      console.log(`TMDB API ERROR: ${error.message} `);
+    } else {
+      console.log(`TMDB API ERROR: unknown `);
+    }
+
+    throw error;
   }
 };
 
-export const getPopularShows = () =>
+export const getPopularShows = (): Promise<PageData> =>
   fetchPageData("/tv/popular", "Popular Tv Shows 📺 ");
 
-export const getTrendingShows = () =>
+export const getTrendingShows = (): Promise<PageData> =>
   fetchPageData("/trending/tv/week", "Trending shows this week");
 
-export const getPopularMovies = () =>
+export const getPopularMovies = (): Promise<PageData> =>
   fetchPageData("/movie/popular", "Popular Movies 🎬");
 
-export const getTrendingMovies = () =>
+export const getTrendingMovies = (): Promise<PageData> =>
   fetchPageData("/trending/movie/week", "Trending movies this week");
 
-export const getShowsBYKeyWord = (keyword) => {
+export const getShowsBYKeyWord = (keyword: string): Promise<PageData> => {
   return fetchPageData(
     `/search/tv`,
     `${keyword} name`,
@@ -101,7 +107,7 @@ export const getShowsBYKeyWord = (keyword) => {
   );
 };
 
-export const getMoviesBYKeyWord = (keyword) => {
+export const getMoviesBYKeyWord = (keyword: string): Promise<PageData> => {
   return fetchPageData(
     `/search/movie`,
     `${keyword} name`,
@@ -109,7 +115,9 @@ export const getMoviesBYKeyWord = (keyword) => {
   );
 };
 
-export const getMoviesAndShowsByKeyWord = (keyword) => {
+export const getMoviesAndShowsByKeyWord = (
+  keyword: string,
+): Promise<PageData> => {
   return fetchPageData(
     `/search/multi`,
     `${keyword} name`,
@@ -121,4 +129,4 @@ export const getMoviesAndShowsByKeyWord = (keyword) => {
 // console.log(formatURL("/search/tv", "house"));
 // console.log(formatURL("/search/movie", "batman"));
 // console.log(await getMoviesBYKeyWord("batman"));
-// console.log(await getMoviesAndShowsByKeyWord("batman"));
+console.log(await getMoviesAndShowsByKeyWord("dajjal"));

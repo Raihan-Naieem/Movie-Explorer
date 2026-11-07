@@ -31,19 +31,25 @@ export function Card({
         <img
           className={`h-full aspect-2/3 rounded-4xl border-2`}
           src={encodeURI(imgURL)}
-          alt={`${title}.img`}
+          alt={`${title ?? 'unknown'} image`}
         />
         <div className="h-full flex flex-col justify-center items-center text-gray-100">
           <div>
-            <div>
-              <span className="font-bold">Title: </span> {title}
-            </div>
+            {title && (
+              <div>
+                <span className="font-bold">Title: </span> {title}
+              </div>
+            )}
+
             <div>
               <span className="font-bold">Media: </span> {mediaType}
             </div>
-            <div>
-              <span className="font-bold">Release: </span> {releaseDate}
-            </div>
+
+            {releaseDate && (
+              <div>
+                <span className="font-bold">Release: </span> {releaseDate}
+              </div>
+            )}
             <div>
               <span className="font-bold">Rating: </span> {rating} ({voteCount})
             </div>

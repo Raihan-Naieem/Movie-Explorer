@@ -45,9 +45,11 @@ export function MoreDetailsPopUp({
               <X />
             </button>
             <div className="flex flex-col grow gap-4  ">
-              <h1 className="font-extrabold sm:text-4xl text-2xl underline">
-                {title}
-              </h1>
+              {title && (
+                <h1 className="font-extrabold sm:text-4xl text-2xl underline">
+                  {title}
+                </h1>
+              )}
 
               <div className="sm:text-2xl text-md overflow-y-auto max-h-70 pb-8">
                 <div className="flex gap-x-2">
@@ -64,7 +66,7 @@ export function MoreDetailsPopUp({
                     </p>
 
                     <p> {mediaType} </p>
-                    <p> {releaseDate}</p>
+                    {releaseDate && <p> {releaseDate}</p>}
                     <p> {isSafeForWork ? "no" : "yes"}</p>
                     <p> {genres.join(" , ")} </p>
                   </div>

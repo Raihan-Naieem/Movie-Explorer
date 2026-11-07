@@ -1,7 +1,9 @@
 // https://api.themoviedb.org/3/genre/tv/list?language=en&api_key=APIKEY
 // https://api.themoviedb.org/3/genre/movie/list?language=en&api_key=APIKEY
 
-const genresFromShows = [
+import type { Genre } from "../types/genre";
+
+const genresFromShows: Genre[] = [
   {
     id: 10759,
     name: "Action & Adventure",
@@ -68,7 +70,7 @@ const genresFromShows = [
   },
 ];
 
-const genresFromMovies = [
+const genresFromMovies: Genre[] = [
   {
     id: 28,
     name: "Action",
