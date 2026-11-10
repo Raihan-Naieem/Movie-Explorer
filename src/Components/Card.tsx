@@ -1,17 +1,6 @@
-// props returns
-//     return {
-//       id: result.id,
-//       title: result.title ?? result.name,
-//       releaseDate: result.release_date ?? result.first_air_date,
-//       rating: result.vote_average,
-//       voteCount: result.vote_count,
-//       summary: result.overview,
-//       isSafeForWork: result.adult,
-//       imgURL: `https://image.tmdb.org/t/p/original/${result.poster_path}`,
-//     };
-
 import { useState } from "react";
 import { MoreDetailsPopUp } from "./MoreDetailsPopUp";
+import type { TmdbMedia } from "../types/tmdb";
 
 export function Card({
   title,
@@ -23,7 +12,7 @@ export function Card({
   isSafeForWork,
   summary,
   imgURL,
-}) {
+}: Omit<TmdbMedia, "id">) {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <>
@@ -31,7 +20,7 @@ export function Card({
         <img
           className={`h-full aspect-2/3 rounded-4xl border-2`}
           src={encodeURI(imgURL)}
-          alt={`${title ?? 'unknown'} image`}
+          alt={`${title ?? "unknown"} image`}
         />
         <div className="h-full flex flex-col justify-center items-center text-gray-100">
           <div>

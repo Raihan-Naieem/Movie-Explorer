@@ -5,12 +5,20 @@ import {
   getTrendingShows,
 } from "../services/TMDB.api";
 import { useSearchParams } from "react-router";
+import type { TmdbMedia } from "../types/tmdb";
 
-export function useShows() {
+interface UseShowsReturns {
+  isLoading: boolean;
+  error: string;
+  pageTitle: string;
+  shows: TmdbMedia[];
+}
+
+export function useShows(): UseShowsReturns {
   const [isLoading, setIsLoading] = useState(true);
   const [searchParams] = useSearchParams();
   const [pageTitle, setPageTitle] = useState("");
-  const [shows, setShows] = useState([]);
+  const [shows, setShows] = useState<TmdbMedia[]>([]);
   const [error, setError] = useState("");
   const searchTerm = searchParams.get("search");
 
@@ -32,8 +40,13 @@ export function useShows() {
           console.log(results);
         }
       } catch (err) {
-        console.log(err);
-        setError(err.message);
+        if (err instanceof Error) {
+          console.log(err.message);
+          setError(err.message);
+        } else {
+          console.log("Unknows error from useShows.ts");
+          setError("Unknows error from useShows.ts");
+        }
       } finally {
         setIsLoading(false);
       }

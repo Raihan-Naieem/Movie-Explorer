@@ -1,36 +1,4 @@
 export function Home() {
-  // return (
-  //   <>
-  //     <div className="flex-1 flex flex-col border-2 border-yellow-300">
-  //       <section className="max-h-dvh flex border-2 border-pink-400">
-  //         <img
-  //           className="flex-1 object-scale-down h-dvh aspect-square"
-  //           src="https://theenterpriseworld.com/wp-content/uploads/2025/10/1.1-Before-You-Watch-Any-Other-Movie-See-These-20-Highest-Grossing-Movies-of-All-Time.jpg"
-  //           alt="movies-home"
-  //         />
-  //
-  //         <div className="flex-1 flex justify-center items-center">
-  //           <p className="text-4xl">text</p>
-  //         </div>
-  //       </section>
-  //
-  //       <section className="min-h-dvh flex justify-between">
-  //         <div>
-  //           <p>img</p>
-  //         </div>
-  //
-  //         <div>
-  //           <p>text</p>
-  //         </div>
-  //       </section>
-  //
-  //       <section className="min-h-dvh flex justify-between">
-  //         <a href="/shows">Explore Now</a>
-  //       </section>
-  //     </div>
-  //   </>
-  // );
-
   return (
     <>
       <section className="grid h-dvh grid-rows-2 md:grid-cols-2 md:grid-rows-1 bg-blue-950 text-gray-300">
@@ -78,10 +46,6 @@ export function Home() {
       <section
         className="h-dvh text-gray-200 bg-cover bg-center
 				           bg-[linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.9)),url('https://images.unsplash.com/photo-1440404653325-ab127d49abc1')]"
-        // style={{
-        //   backgroundImage:
-        //     "url(https://images.unsplash.com/photo-1440404653325-ab127d49abc1?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D)",
-        // }}
       >
         <div className="flex h-full flex-col items-center justify-center px-4 text-center">
           <h2 className="text-4xl font-extrabold md:text-6xl">

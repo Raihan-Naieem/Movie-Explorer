@@ -1,10 +1,11 @@
 import { Search } from "lucide-react";
-import { useState } from "react";
+import { useState, type ChangeEventHandler } from "react";
 import { Form } from "react-router";
 
 export function SearchBar() {
   const [searchTerm, setSearchTerm] = useState("");
-  const handleChange = (event) => setSearchTerm(event.target.value);
+  const handleChange: ChangeEventHandler<HTMLInputElement> = (event) =>
+    setSearchTerm(event.target.value);
 
   return (
     <>

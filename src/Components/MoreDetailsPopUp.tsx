@@ -1,5 +1,10 @@
 import { X } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, type MouseEventHandler } from "react";
+import type { TmdbMedia } from "../types/tmdb";
+
+interface MoreDetailsPopUpProp extends TmdbMedia {
+  onClose: () => void;
+}
 
 export function MoreDetailsPopUp({
   title,
@@ -12,18 +17,20 @@ export function MoreDetailsPopUp({
   summary,
   imgURL,
   onClose,
-}) {
+}: Omit<MoreDetailsPopUpProp, "id">) {
   // to disable scrolling when moreDetailsPopup
   useEffect(() => {
     // on modal open
     document.body.style.overflow = "hidden";
-
     // on modal close
     return () => {
       document.body.style.overflow = "";
     };
   }, []);
-  const stopEventPropagation = (event) => event.stopPropagation();
+
+  const stopEventPropagation: MouseEventHandler<HTMLDivElement> = (event) =>
+    event.stopPropagation();
+
   return (
     <>
       {/* onClose on backdrop, event propagation stops after that */}
@@ -68,7 +75,7 @@ export function MoreDetailsPopUp({
                     <p> {mediaType} </p>
                     {releaseDate && <p> {releaseDate}</p>}
                     <p> {isSafeForWork ? "no" : "yes"}</p>
-                    <p> {genres.join(" , ")} </p>
+                    {genres && <p> {genres.join(" , ")} </p>}
                   </div>
                 </div>
                 <p className="font-medium text-3xl mt-4">Overview:</p>

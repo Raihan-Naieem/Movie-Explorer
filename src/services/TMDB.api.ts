@@ -26,7 +26,7 @@ const formatURL = (endPoint: string, query: string = ""): string => {
 };
 
 const findGenres = (genreIds: number[] | undefined): string[] | undefined => {
-	if(!genreIds) return undefined;
+  if (!genreIds) return undefined;
   const genreNames = Genres.filter((genre) => genreIds.includes(genre.id)).map(
     (genre) => genre.name,
   );
@@ -129,4 +129,4 @@ export const getMoviesAndShowsByKeyWord = (
 // console.log(formatURL("/search/tv", "house"));
 // console.log(formatURL("/search/movie", "batman"));
 // console.log(await getMoviesBYKeyWord("batman"));
-console.log(await getMoviesAndShowsByKeyWord("dajjal"));
+// console.log(await getMoviesAndShowsByKeyWord("dajjal"));
