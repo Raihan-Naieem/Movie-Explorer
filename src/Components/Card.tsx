@@ -19,7 +19,9 @@ export function Card({
       <div className="flex flex-col justify-center items-center gap-4 border-2 rounded-2xl px-6 py-4 bg-yellow-800/50">
         <img
           className={`h-full aspect-2/3 rounded-4xl border-2`}
-          src={encodeURI(imgURL)}
+          src={
+            imgURL ? encodeURI(imgURL) : "https://i.redd.it/zg0r0v2va7fe1.jpeg"
+          }
           alt={`${title ?? "unknown"} image`}
         />
         <div className="h-full flex flex-col justify-center items-center text-gray-100">

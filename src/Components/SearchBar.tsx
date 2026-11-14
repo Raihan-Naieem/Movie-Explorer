@@ -24,6 +24,7 @@ export function SearchBar() {
           value={searchTerm}
           onChange={handleChange}
           placeholder="search"
+          required
         />
       </Form>
     </>
